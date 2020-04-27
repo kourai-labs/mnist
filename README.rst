@@ -1,7 +1,10 @@
 
 **************
-boilerplate-ml
+mnist
 **************
+
+A simple MNIST training and validation example. Mostly to showcase 
+`pytorch-boilerplate <https://github.com/kourai-research/pytorch-boilerplate.git>`_.
 
 .. contents:: **Contents of this document**
    :depth: 2
@@ -11,11 +14,8 @@ Getting Started
 
 .. code:: shell
 
-    git clone https://github.com/kourai-research/boilerplate-ml.git
-    mv boilerplate mnist
+    git clone https://github.com/kourai-research/mnist.git
     cd mnist
-    git remote add origin https://github.com/kourai-research/mnist.git
-    git push -u origin master
 
 References
 ==========
