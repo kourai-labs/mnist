@@ -1,12 +1,17 @@
 import torch
 
+from argparse import ArgumentParser
+
 class MNISTClassifier(torch.nn.Module):
 
-    def __init__(self):
+    def __init__(self, hparams):
         super(MNISTClassifier, self).__init__()
 
+        self.hparams = hparams
+        self.input_size = self.hparams.input_size
+
         #TODO remove hardcode for input size
-        self.fc1 = torch.nn.Linear(28*28, 128)
+        self.fc1 = torch.nn.Linear(self.input_size*self.input_size, 128)
         self.fc2 = torch.nn.Linear(128, 10)
 
         self.log_sm = torch.nn.LogSoftmax(dim=0)
@@ -26,6 +31,12 @@ class MNISTClassifier(torch.nn.Module):
 
         # Output 
         return self.log_sm(x)
+    
+    @staticmethod
+    def add_args(parent_parser):
+        parser = ArgumentParser(parents=[parent_parser], add_help=False)
+        parser.add_argument('--input_size', type=int, default=28)
+        return parser
 
 if __name__ == "__main__":
     model = MNISTClassifier()

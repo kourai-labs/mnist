@@ -131,3 +131,6 @@ val2017_bbox_results.json
 
 #outputs log
 outputs/
+
+# lightning logs
+lightning_logs/

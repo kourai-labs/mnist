@@ -1,16 +1,23 @@
 import torch
 from datasets.mnist import MNIST
+from systems.runtime import Runtime
 
+from pytorch_lightning import Trainer
+from argparse import ArgumentParser
 
 def main():
 
-    # create and load MNIST training dataset
-    train_dataset = MNIST(root="data/datasymlink",train=True)
-    train_dataloader = train_dataset.get_dataloader()
+    parser = ArgumentParser()
+    parser = Runtime.add_args(parser)
+    parser = Trainer.add_argparse_args(parser)
 
-    # create and load MNIST validation set
-    val_dataset = MNIST(root="data/datasymlink",train=False)
-    val_dataloader = train_dataset.get_dataloader()
+    hparams = parser.parse_args()
+
+    runtime = Runtime(hparams)
+
+    trainer = Trainer.from_argparse_args(hparams, gpu=2)
+
+    trainer.fit(runtime)
 
     print("done.")
 
