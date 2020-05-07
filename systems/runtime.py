@@ -20,7 +20,7 @@ class Runtime(pl.LightningModule):
         # model(s) init
         self.hparams = hparams
 
-        self.model = MNISTClassifier(hparams)
+        self.model = MNISTClassifier(input_size=self.hparams.mnistclassifier_input_size)
         self.training_dataset = MNIST(os.getcwd() + "/data/datasymlink")
         self.validation_dataset = MNIST(os.getcwd() + "/data/datasymlink",train=False)
         self.loss_function  = CrossEntropyLoss()
