@@ -17,19 +17,18 @@ class Runtime(pl.LightningModule):
 
     def __init__(self, hparams):
         super().__init__()
-        # model(s) init
         self.hparams = hparams
 
-        self.model = MNISTClassifier(input_size=self.hparams.mnistclassifier_input_size)
-        self.training_dataset = MNIST(os.getcwd() + "/data/datasymlink")
+        self.model = MNISTClassifier(input_size=self.hparams.input_size)
+        self.training_dataset   = MNIST(os.getcwd() + "/data/datasymlink")
         self.validation_dataset = MNIST(os.getcwd() + "/data/datasymlink",train=False)
         self.loss_function  = CrossEntropyLoss()
-        self.optimizer = Adam(self.model.parameters(), hparams)
+        self.optimizer = Adam(self.model.parameters(), self.hparams.learning_rate)
 
 
     def forward(self, x):
         return self.model(x)
-    
+
     def training_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self(x)

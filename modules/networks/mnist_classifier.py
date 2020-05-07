@@ -36,7 +36,7 @@ class MNISTClassifier(torch.nn.Module):
     @staticmethod
     def add_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--mnistclassifier_input_size', type=int, default=MNISTClassifier.INPUT_SIZE)
+        parser.add_argument('--input_size', type=int, default=MNISTClassifier.INPUT_SIZE)
         return parser
 
 if __name__ == "__main__":

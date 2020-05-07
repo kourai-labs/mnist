@@ -8,14 +8,14 @@ from argparse import ArgumentParser
 def main():
 
     parser = ArgumentParser()
+
     parser = Runtime.add_args(parser)
     parser = Trainer.add_argparse_args(parser)
 
     hparams = parser.parse_args()
 
     runtime = Runtime(hparams)
-
-    trainer = Trainer.from_argparse_args(hparams, gpu=2)
+    trainer = Trainer.from_argparse_args(hparams)
 
     trainer.fit(runtime)
 
