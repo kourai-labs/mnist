@@ -4,14 +4,12 @@ from torchvision import datasets, transforms
 
 class MNIST(datasets.MNIST):
 
-    DEFAULT_BATCH = 64
     DEFAULT_IMAGE_SIZE = 28
 
     def __init__(self,root, image_size=DEFAULT_IMAGE_SIZE, train=True, transform=None, download=True):
 
         self.image_size = image_size 
         self.train = train
-
         super(MNIST, self).__init__(root=root,train=train,transform=self._get_transform(),
             target_transform=None,download=download)
     
@@ -20,6 +18,3 @@ class MNIST(datasets.MNIST):
         tforms.append(transforms.ToTensor())
         tforms.append(transforms.Normalize((0.1307,),(0.3081,)))
         return transforms.Compose(tforms)
-
-    def get_dataloader(self, batch_size=DEFAULT_BATCH):
-        return torch.utils.data.DataLoader(self, batch_size=batch_size, shuffle=self.train)
