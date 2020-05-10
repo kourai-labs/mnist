@@ -1,0 +1,12 @@
+trainer:
+  # training hyperparams
+  learning_rate: 0.1
+  auto_lr_find: False 
+  max_epochs: 10
+  resume_from_checkpoint: null
+
+  # system hyperparams
+  gpus: 2
+  num_nodes: 1
+  accumulate_grad_batches: 1
+  distributed_backend: dp

@@ -1,0 +1,4 @@
+defaults:
+  - mnist_classifier
+  - runtime
+  - trainer

@@ -5,19 +5,16 @@ from systems.runtime import Runtime
 from pytorch_lightning import Trainer
 from argparse import ArgumentParser
 
-def main(parser):
+import hydra
+from omegaconf import DictConfig
 
-    ### Add to parser ###
-    parser = Runtime.add_argparse_args(parser)
-    parser = Trainer.add_argparse_args(parser)
-
-    #temp_args, _ = parser.parse_known_args()
-    
-    hparams = parser.parse_args()
+@hydra.main(config_path="configs/config.yaml")
+def main(cfg: DictConfig) -> None:
+    print(cfg.pretty())
 
     # create runtime and trainer with args
-    runtime = Runtime(hparams)
-    trainer = Trainer.from_argparse_args(hparams)
+    runtime = Runtime(cfg)
+    trainer = Trainer(**cfg.trainer)
 
     # start training
     trainer.fit(runtime)
@@ -25,4 +22,4 @@ def main(parser):
     print("done.")
 
 if __name__ == "__main__":
-    main(ArgumentParser())
+    main()
