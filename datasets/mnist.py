@@ -4,7 +4,7 @@ from torchvision import datasets, transforms
 
 class MNIST(datasets.MNIST):
 
-    def __init__(self,root, image_size=28, transform=None, train=True, download=True):
+    def __init__(self, root, image_size=28, transform=None, train=True, download=True):
 
         self.image_size = image_size 
         self.train = train
