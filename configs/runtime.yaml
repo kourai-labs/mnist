@@ -1,4 +1,5 @@
 runtime:
+  data_root: data/mnist
   batch_size: 64
   num_workers: 16
   train_val_split: 0.9

@@ -30,12 +30,15 @@ class Runtime(pl.LightningModule):
     ##########
 
     def prepare_data(self):
-        project_home = hydra.utils.get_original_cwd()
-        mnist_dataset = MNIST(root=project_home + "/data/datasymlink")
+        data_root = os.path.join(hydra.utils.get_original_cwd(), self.cfg.data_root)
+        os.makedirs(data_root, exist_ok=True)  # make in case does not exist
+        mnist_dataset = MNIST(root=data_root)
+
         train_samples_n = int(len(mnist_dataset) * self.cfg.train_val_split)
         val_samples_n   = len(mnist_dataset) - train_samples_n
-        self.training_dataset, self.validation_dataset = random_split(mnist_dataset,lengths=[train_samples_n, val_samples_n])
-        self.test_dataset= MNIST(root=project_home + "/data/datasymlink",train=False)
+
+        self.training_dataset, self.validation_dataset = random_split(mnist_dataset, lengths=[train_samples_n, val_samples_n])
+        self.test_dataset= MNIST(root=data_root, train=False)
 
     def train_dataloader(self):
         return DataLoader(self.training_dataset, batch_size=self.cfg.batch_size, num_workers=self.cfg.num_workers)
