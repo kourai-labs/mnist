@@ -12,10 +12,19 @@ A simple MNIST training and validation example. Mostly to showcase
 Getting Started
 ===============
 
+Install
+
 .. code:: shell
 
     git clone https://github.com/kourai-research/mnist.git
     cd mnist
+    pip install -r requirements.txt
+
+Run
+
+.. code:: shell
+
+    python train.py
 
 References
 ==========
