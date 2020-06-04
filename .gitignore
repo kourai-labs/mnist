@@ -123,6 +123,7 @@ val2017_bbox_results.json
 
 # Pytorch checkpoints
 *.pth
+
 # ONNX models
 *.onnx
 
@@ -134,3 +135,6 @@ outputs/
 
 # lightning logs
 lightning_logs/
+
+# raw data 
+data/
