@@ -10,3 +10,4 @@ trainer:
   num_nodes: 1
   accumulate_grad_batches: 1
   distributed_backend: dp
+  profiler: True

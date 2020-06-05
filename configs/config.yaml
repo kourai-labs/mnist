@@ -2,3 +2,4 @@ defaults:
   - mnist_classifier
   - runtime
   - trainer
+  - wandb

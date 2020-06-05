@@ -3,7 +3,7 @@ from datasets.mnist import MNIST
 from systems.runtime import Runtime
 
 from pytorch_lightning import Trainer
-from argparse import ArgumentParser
+import wandb
 
 import hydra
 from omegaconf import DictConfig
@@ -11,6 +11,9 @@ from omegaconf import DictConfig
 @hydra.main(config_path="configs/config.yaml")
 def main(cfg: DictConfig) -> None:
     print(cfg.pretty())
+
+    # initialize wandb for logging and tracking
+    wandb.init(project=cfg.wandb.project_name, resume=cfg.wandb.resume)
 
     # create runtime and trainer with args
     runtime = Runtime(cfg)

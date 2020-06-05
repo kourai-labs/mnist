@@ -1,9 +1,9 @@
 import os
-from argparse import ArgumentParser
-
 import torch
+
 import pytorch_lightning as pl
 import hydra
+import wandb
 
 from datasets.mnist import MNIST
 from modules.networks.mnist_classifier import MNISTClassifier
@@ -20,7 +20,7 @@ class Runtime(pl.LightningModule):
         super().__init__()
         self.cfg = cfg.runtime
 
-        self.model = MNISTClassifier(**cfg.mnist_classifier)
+        self.model = MNISTClassifier(input_size=cfg.mnist_classifier.input_size)
 
     def forward(self, x):
         return self.model(x)
@@ -55,6 +55,7 @@ class Runtime(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = F.cross_entropy(y_hat,y)
+        wandb.log({"Loss (train)":loss.item()})
         return {'loss': loss}
 
     def configure_optimizers(self):
@@ -73,6 +74,7 @@ class Runtime(pl.LightningModule):
     
     def validation_epoch_end(self, outputs):
         avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
+        wandb.log({"Avg Loss (val)": avg_loss})
         return {'val_loss': avg_loss}
 
     ############# 
@@ -81,10 +83,11 @@ class Runtime(pl.LightningModule):
 
     def test_step(self, batch, batch_idx):
         x, y = batch
-        logits = self(x)
-        loss = F.nll_loss(logits, y)
-        return {'val_loss': loss}
+        y_hat = self(x)
+        loss = F.cross_entropy(y_hat, y)
+        return {'test_loss': loss}
 
     def test_epoch_end(self, outputs):
         avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
-        return {'val_loss': avg_loss }
+        wandb.log({"Avg Loss (test)": avg_loss})
+        return {'test_loss': avg_loss }
