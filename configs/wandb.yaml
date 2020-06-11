@@ -1,0 +1,3 @@
+wandb:
+  project_name: pytorch-boilerplate-mnist
+  resume: null
